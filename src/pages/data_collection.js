@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Link, MenuItem, Select, FormControl, InputLabel, Grid, Grid2 } from '@mui/material';
+import { TextField, Button, Box, Typography, Link, MenuItem, Select, FormControl, InputLabel, Grid, Grid2, Snackbar, Alert } from '@mui/material';
 import { loginStyles } from '../components/loginStyles';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -11,21 +11,38 @@ import really_cold from './images/really_cold.png'
 import comfortable from './images/comfortable.png'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import * as Yup from 'yup';
 
 const styles = loginStyles();
 
 const DataCollection = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [openSnackbar,setOpenSnackbar] = useState(false);
 
-    const baseURL = 'https://thermal-sensation.onrender.com/data'
+    // const baseURL = 'https://thermal-sensation.onrender.com/data'
+    const baseURL = 'http://localhost:4000/data'
+
+    const validationSchema = Yup.object({
+        roll_no: Yup.string()
+            .required('Roll number is required'),
+        room: Yup.string()
+            .required('Room selection is required'),
+        thermal_sensation: Yup.string()
+            .required('Thermal sensation is required'),
+        comfort: Yup.string()
+            .required('Comfort feedback is required'),
+    });
 
     const onSubmit = async (values, actions) => {
         console.log(values);
         try {
             const res = await axios.post(baseURL, values);
-            
-            console.log("res");
+            console.log(res);
+
+            actions.resetForm();
+            setOpenSnackbar(true);
+
         } catch (err) {
             console.log(err);
             setError(err);
@@ -48,6 +65,7 @@ const DataCollection = () => {
             thermal_sensation: 'Comfortable',
             comfort:'yes'
         },
+        validationSchema, 
         onSubmit,
     });
 
@@ -78,7 +96,7 @@ const DataCollection = () => {
                     error={errors.roll_no && touched.roll_no}
                 />
                 <Typography variant="body2" sx={styles.errorMessage}>
-                    {touched.roll_no && errors.roll_no}
+                    {touched.roll_no}
                 </Typography>
 
                 <FormControl variant="outlined" fullWidth sx={{ marginBottom: '20px' }}>
@@ -158,6 +176,17 @@ const DataCollection = () => {
                     Submit
                 </Button>
             </form>
+
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={() => setOpenSnackbar(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+            >
+                <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+                    Thanks for your response!
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };

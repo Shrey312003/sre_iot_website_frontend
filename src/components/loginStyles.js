@@ -4,12 +4,13 @@ export const loginStyles = () => ({
     formContainer: {
         width: '90%',
         maxWidth: '400px',
-        margin: '5% auto 5% auto',
+        margin: '3% auto 3% auto',
         padding: { xs: '16px', sm: '20px' },
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         borderRadius: '8px',
         backgroundColor: '#f9f9f9',
         textAlign: 'center',
+        maxHeight: "50%"
     },
     headerText: {
         fontSize: { xs: '1.25rem', sm: '1.5rem' },
@@ -32,7 +33,7 @@ export const loginStyles = () => ({
         display: 'flex',
         justifyContent: 'space-around',
         flexWrap: 'wrap',
-        marginBottom: '20px',
+        marginBottom: '10px',
     },
     feelButton: {
         padding: '8px',
@@ -42,8 +43,9 @@ export const loginStyles = () => ({
         flexDirection: 'column',
         alignItems: 'center',
         marginBottom: '10px',
-        width: { xs: '60px', sm: '70px' },
-        height: { xs: '70px', sm: '80px' },
+        width: { xs: '50px', sm: '70px' },
+        height: { xs: '60px', sm: '70px' },
+        minWidth:{xs: '50px', sm: '60px' }
     },
     feelButtonSelected: {
         border: '2px solid blue',
@@ -59,6 +61,6 @@ export const loginStyles = () => ({
         width: "100%",
         justifyContent: "center",
         fontSize: { xs: '0.875rem', sm: '1rem' },
-        marginTop: '10px',
+        // marginTop: '10px',
     },
 });
