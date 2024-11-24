@@ -20,8 +20,8 @@ const DataCollection = () => {
     const [error, setError] = useState(null);
     const [openSnackbar,setOpenSnackbar] = useState(false);
 
-    // const baseURL = 'https://thermal-sensation.onrender.com/data'
-    const baseURL = 'http://localhost:4000/data'
+    const baseURL = 'https://thermal-sensation.onrender.com/data'
+    // const baseURL = 'http://localhost:4000/data'
 
     const validationSchema = Yup.object({
         roll_no: Yup.string()
